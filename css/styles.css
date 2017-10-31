@@ -4,4 +4,25 @@ html {
   font-size: 18px;
   letter-spacing: 0.2px; }
 
+button {
+  font-size: 100%;
+  background-color: #2b90d9;
+  color: #fff;
+  border-style: none;
+  border-radius: 2px;
+  padding: 5px 12px; }
+  button:hover {
+    background-color: #2074b1; }
+
+.container {
+  width: 300px; }
+
+.recipe-box {
+  margin-bottom: 20px; }
+
+.list-item {
+  background: #ddd;
+  padding: 5px 10px;
+  margin-bottom: 3px; }
+
 /*# sourceMappingURL=styles.css.map */
