@@ -1,3 +1,7 @@
-
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+html {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.2px; }
 
 /*# sourceMappingURL=styles.css.map */
