@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom';
 
 let recipes = [
   {
-    name: 'Macaroni Cheese',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-    toppings: [ 'Cheese', 'Macaroni', 'Salt & Pepper']
+    name: 'Margherita',
+    description: 'The classic neapolitan pizza',
+    toppings: [ 'Mozzarella', 'Tomatoes', 'Basil']
   },
   {
-    name: 'Spaghetti Bolognese',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-    toppings: [ 'Spaghetti', 'Minced Beef', 'Chopped Tomatoes']
+    name: 'Bolognese',
+    description: 'Lorem ipsum dolor sit amet.',
+    toppings: [ 'Onion', 'Minced Beef', 'Chopped Tomatoes']
   },
   {
-    name: 'Pizza',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+    name: 'Tuscan',
+    description: 'Ut enim ad minim veniam.',
     toppings: [ 'Dough', 'Cheese', 'Tomato Puree']
   }
 ];
@@ -87,8 +87,19 @@ class AddRecipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      name: "",
+      desc: "",
+      tops: ""
     }
+  }
+
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value})
+  }
+
+  handleFormSubmit(event) {
+    event.preventDefault();
+    console.log(this.state);
   }
 
   render() {
@@ -96,14 +107,20 @@ class AddRecipe extends Component {
       <div className="modal-bg">
         <div className="modal-box">
           <button onClick={this.props.closeAddModal} className="btn-close">X</button>
-          <form>
-            <label htmlFor="name">Name</label>
-            <input placeholder="name" id="name"/>
-            <label htmlFor="desc">Description</label>
-            <input placeholder="description" id="desc"/>
-            <label htmlFor="tops">Toppings</label>
-            <textarea placeholder="toppings" id="tops"/>
-            <button>Add Recipe</button>
+          <form onSubmit={this.handleFormSubmit.bind(this)}>
+            <label>Name</label>
+            <input name="name" type="text" placeholder="pizza name"
+              onChange={this.handleChange.bind(this)}
+            />
+            <label>Description</label>
+            <input name="desc" type="text" placeholder="description"
+              onChange={this.handleChange.bind(this)}
+            />
+            <label>Toppings</label>
+            <textarea name="tops" placeholder="separate by commas"
+              onChange={this.handleChange.bind(this)}
+            />
+            <input type="submit" value="Add Recipe"></input>
           </form>
         </div>
       </div>
