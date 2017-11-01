@@ -4,18 +4,18 @@ import ReactDOM from 'react-dom';
 let recipes = [
   {
     name: 'Macaroni Cheese',
-    method: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-    ingredients: [ 'Cheese', 'Macaroni', 'Salt & Pepper']
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+    toppings: [ 'Cheese', 'Macaroni', 'Salt & Pepper']
   },
   {
     name: 'Spaghetti Bolognese',
-    method: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-    ingredients: [ 'Spaghetti', 'Minced Beef', 'Chopped Tomatoes']
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+    toppings: [ 'Spaghetti', 'Minced Beef', 'Chopped Tomatoes']
   },
   {
     name: 'Pizza',
-    method: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-    ingredients: [ 'Dough', 'Cheese', 'Tomato Puree']
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+    toppings: [ 'Dough', 'Cheese', 'Tomato Puree']
   }
 ];
 
@@ -47,11 +47,10 @@ class Recipe extends Component {
       <div className="list-item" onClick={this.toggleClass.bind(this)}>
         <h4>{this.props.recipe.name}</h4>
         <div className={this.isShowing()}>
-          <strong>Method</strong>
-          <p>{this.props.recipe.method}</p>
-          <strong>Ingredients</strong>
+          <p>{this.props.recipe.description}</p>
+          <strong>Toppings</strong>
           <ul>
-            {this.props.recipe.ingredients.map(function(item, i) {
+            {this.props.recipe.toppings.map(function(item, i) {
               return (
                 <li key={i}>{item}</li>
               )
@@ -85,10 +84,28 @@ class RecipeBox extends Component {
 }
 
 class AddRecipe extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+  }
+
   render() {
     return (
-      <div>
-        Hello
+      <div className="modal-bg">
+        <div className="modal-box">
+          <button onClick={this.props.closeAddModal} className="btn-close">X</button>
+          <form>
+            <label htmlFor="name">Name</label>
+            <input placeholder="name" id="name"/>
+            <label htmlFor="desc">Description</label>
+            <input placeholder="description" id="desc"/>
+            <label htmlFor="tops">Toppings</label>
+            <textarea placeholder="toppings" id="tops"/>
+            <button>Add Recipe</button>
+          </form>
+        </div>
       </div>
     )
   }
@@ -103,7 +120,13 @@ class App extends Component {
     };
   }
 
-  showAddRecipe() {
+  closeAddModal() {
+    this.setState({
+      addRecipe: false
+    })
+  }
+
+  openAddModal() {
     this.setState({
       addRecipe: true
     })
@@ -113,8 +136,8 @@ class App extends Component {
     return (
       <div className="container">
         <RecipeBox recipeList={this.state.foundRecipes}/>
-        <button onClick={this.showAddRecipe.bind(this)}>Add Recipe</button>
-        {this.state.addRecipe ? <AddRecipe /> : null}
+        <button onClick={this.openAddModal.bind(this)}>Add Recipe</button>
+        {this.state.addRecipe ? <AddRecipe closeAddModal={this.closeAddModal.bind(this)} /> : null}
       </div>
     )
   }
