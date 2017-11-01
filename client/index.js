@@ -88,7 +88,7 @@ class AddRecipe extends Component {
   render() {
     return (
       <div>
-        <button>Add Recipe</button>
+        Hello
       </div>
     )
   }
@@ -98,15 +98,23 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      foundRecipes: this.props.recipeList
+      foundRecipes: this.props.recipeList,
+      addRecipe: false
     };
+  }
+
+  showAddRecipe() {
+    this.setState({
+      addRecipe: true
+    })
   }
 
   render() {
     return (
       <div className="container">
         <RecipeBox recipeList={this.state.foundRecipes}/>
-        <AddRecipe />
+        <button onClick={this.showAddRecipe.bind(this)}>Add Recipe</button>
+        {this.state.addRecipe ? <AddRecipe /> : null}
       </div>
     )
   }
