@@ -20,22 +20,40 @@ let recipes = [
 ];
 
 class Recipe extends Component {
-  componentDidMount() {
-    console.log(this.props);
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    }
+  }
+
+  // componentDidMount() {
+  //   console.log(this.props);
+  // }
+
+  toggleClass() {
+    let status = this.state.open;
+    this.setState({
+      open: !status
+    });
+  }
+
+  isShowing() {
+    return this.state.open ? '' : 'hidden';
   }
 
   render() {
     return (
-      <div className="list-item">
+      <div className="list-item" onClick={this.toggleClass.bind(this)}>
         <h4>{this.props.recipe.name}</h4>
-        <div className="hidden">
+        <div className={this.isShowing()}>
           <strong>Method</strong>
           <p>{this.props.recipe.method}</p>
           <strong>Ingredients</strong>
           <ul>
             {this.props.recipe.ingredients.map(function(item, i) {
               return (
-                <li>{item}</li>
+                <li key={i}>{item}</li>
               )
             })}
           </ul>
@@ -58,7 +76,7 @@ class RecipeBox extends Component {
       <div className="recipe-box">
           {this.props.recipeList.map(function(recipe, i) {
             return (
-            <Recipe recipe={recipe} key={i}/>
+              <Recipe recipe={recipe} key={i}/>
             )
           })}
       </div>
