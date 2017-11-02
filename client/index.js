@@ -97,18 +97,20 @@ class AddRecipe extends Component {
   //   console.log(this.props);
   // }
 
+  toppingsArray(str) {
+    return str.replace(/ /g, '').split(',');
+  }
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
-    let tops = [];
-    tops.push(this.state.toppings);
     const pizzaObj = {
       name: this.state.name,
       description: this.state.description,
-      toppings: tops
+      toppings: this.toppingsArray(this.state.toppings)
     };
     this.props.newPizza(pizzaObj);
   }
