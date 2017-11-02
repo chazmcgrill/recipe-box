@@ -27,10 +27,6 @@ class Recipe extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   console.log(this.props);
-  // }
-
   toggleClass() {
     let status = this.state.open;
     this.setState({
@@ -70,6 +66,10 @@ class RecipeBox extends Component {
     }
   }
 
+  componentDidMount() {
+    console.log(this.state.foundRecipes);
+  }
+
   render() {
     return (
       <div className="recipe-box">
@@ -88,10 +88,14 @@ class AddRecipe extends Component {
     super(props);
     this.state = {
       name: "",
-      desc: "",
-      tops: ""
+      description: "",
+      toppings: ""
     }
   }
+
+  // componentDidMount() {
+  //   console.log(this.props);
+  // }
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
@@ -99,7 +103,14 @@ class AddRecipe extends Component {
 
   handleFormSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    let tops = [];
+    tops.push(this.state.toppings);
+    const pizzaObj = {
+      name: this.state.name,
+      description: this.state.description,
+      toppings: tops
+    };
+    this.props.newPizza(pizzaObj);
   }
 
   render() {
@@ -113,11 +124,11 @@ class AddRecipe extends Component {
               onChange={this.handleChange.bind(this)}
             />
             <label>Description</label>
-            <input name="desc" type="text" placeholder="description"
+            <input name="description" type="text" placeholder="description"
               onChange={this.handleChange.bind(this)}
             />
             <label>Toppings</label>
-            <textarea name="tops" placeholder="separate by commas"
+            <textarea name="toppings" placeholder="separate by commas"
               onChange={this.handleChange.bind(this)}
             />
             <input type="submit" value="Add Recipe"></input>
@@ -149,12 +160,20 @@ class App extends Component {
     })
   }
 
+  addNewPizza(pizza) {
+    var temp = this.state.foundRecipes.slice();
+    temp.push(pizza);
+    this.setState({foundRecipes: temp});
+    console.log(this.state.foundRecipes);
+  }
+
+
   render() {
     return (
       <div className="container">
         <RecipeBox recipeList={this.state.foundRecipes}/>
         <button onClick={this.openAddModal.bind(this)}>Add Recipe</button>
-        {this.state.addRecipe ? <AddRecipe closeAddModal={this.closeAddModal.bind(this)} /> : null}
+        {this.state.addRecipe ? <AddRecipe newPizza={this.addNewPizza.bind(this)} closeAddModal={this.closeAddModal.bind(this)} /> : null}
       </div>
     )
   }
