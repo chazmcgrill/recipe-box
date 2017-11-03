@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom';
 
 let recipes = [
   {
+    id: 1,
     name: 'Margherita',
     description: 'The classic neapolitan pizza',
     toppings: [ 'Mozzarella', 'Tomatoes', 'Basil']
   },
   {
+    id: 2,
     name: 'Bolognese',
     description: 'Lorem ipsum dolor sit amet.',
     toppings: [ 'Onion', 'Minced Beef', 'Chopped Tomatoes']
   },
   {
+    id: 3,
     name: 'Tuscan',
     description: 'Ut enim ad minim veniam.',
     toppings: [ 'Dough', 'Cheese', 'Tomato Puree']
@@ -25,6 +28,16 @@ class Recipe extends Component {
     this.state = {
       open: false
     }
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+  }
+
+  delete() {
+    console.log(this.props);
+    console.log(this.state);
+    this.props._deleteRequest();
   }
 
   toggleClass() {
@@ -52,6 +65,9 @@ class Recipe extends Component {
               )
             })}
           </ul>
+          <button onClick={this.delete.bind(this)}>Delete</button>
+          {/* on click pass the key to app to remove the item from the array */ }
+          <button>Edit</button>
         </div>
       </div>
     )
@@ -70,12 +86,17 @@ class RecipeBox extends Component {
     console.log(this.state.foundRecipes);
   }
 
+  delete() {
+    console.log("delete passed");
+    // this.props.delete();
+  }
+
   render() {
     return (
       <div className="recipe-box">
           {this.props.recipeList.map(function(recipe, i) {
             return (
-              <Recipe recipe={recipe} key={i}/>
+              <Recipe recipe={recipe} _deleteRequest={this.delete} key={recipe.id}/>
             )
           })}
       </div>
@@ -92,10 +113,6 @@ class AddRecipe extends Component {
       toppings: ""
     }
   }
-
-  // componentDidMount() {
-  //   console.log(this.props);
-  // }
 
   toppingsArray(str) {
     return str.replace(/ /g, '').split(',');
@@ -150,6 +167,16 @@ class App extends Component {
     };
   }
 
+  // delete(id) {
+  //   let newRecipes = this.state.foundRecipes;
+  //   for (var i = 0; i < newRecipes.length; i++) {
+  //     if (newRecipes.id === id) {
+  //       newRecipes = newRecipes.slice(i);
+  //     }
+  //   }
+  //   this.setState({ foundRecipes: newRecipes });
+  // }
+
   closeAddModal() {
     this.setState({
       addRecipe: false
@@ -173,7 +200,9 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <RecipeBox recipeList={this.state.foundRecipes}/>
+        <RecipeBox
+          recipeList={this.state.foundRecipes}
+        />
         <button onClick={this.openAddModal.bind(this)}>Add Recipe</button>
         {this.state.addRecipe ? <AddRecipe newPizza={this.addNewPizza.bind(this)} closeAddModal={this.closeAddModal.bind(this)} /> : null}
       </div>
