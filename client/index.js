@@ -30,14 +30,15 @@ class Recipe extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.props);
-  }
+  // componentDidMount() {
+  //   console.log(this.props);
+  // }
 
   delete() {
-    console.log(this.props);
-    console.log(this.state);
-    this.props._deleteRequest();
+    var id = this.props.recipe.id;
+    recipes = recipes.filter(function(element) {
+      return element.id !== id;
+    });
   }
 
   toggleClass() {
@@ -65,8 +66,7 @@ class Recipe extends Component {
               )
             })}
           </ul>
-          <button onClick={this.delete.bind(this)}>Delete</button>
-          {/* on click pass the key to app to remove the item from the array */ }
+          <button id={this.props.recipe.id} onClick={this.delete.bind(this)}>Delete</button>
           <button>Edit</button>
         </div>
       </div>
@@ -82,21 +82,14 @@ class RecipeBox extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.state.foundRecipes);
-  }
-
-  delete() {
-    console.log("delete passed");
-    // this.props.delete();
-  }
-
   render() {
     return (
       <div className="recipe-box">
           {this.props.recipeList.map(function(recipe, i) {
             return (
-              <Recipe recipe={recipe} _deleteRequest={this.delete} key={recipe.id}/>
+              <Recipe
+                recipe={recipe}
+                key={recipe.id}/>
             )
           })}
       </div>
@@ -110,8 +103,13 @@ class AddRecipe extends Component {
     this.state = {
       name: "",
       description: "",
-      toppings: ""
+      toppings: "",
+      idCounter: recipes.length
     }
+  }
+
+  componentDidMount() {
+    console.log(this.state.idCounter);
   }
 
   toppingsArray(str) {
@@ -122,9 +120,17 @@ class AddRecipe extends Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
+  uniqueId(id) {
+    console.log('id counter state: ' + this.state.idCounter);
+    console.log('id passed: ' + this.state.idCounter);
+    this.setState({ idCounter: id})
+    return id;
+  }
+
   handleFormSubmit(event) {
     event.preventDefault();
     const pizzaObj = {
+      id: this.uniqueId(this.state.idCounter + 1),
       name: this.state.name,
       description: this.state.description,
       toppings: this.toppingsArray(this.state.toppings)
@@ -166,16 +172,6 @@ class App extends Component {
       addRecipe: false
     };
   }
-
-  // delete(id) {
-  //   let newRecipes = this.state.foundRecipes;
-  //   for (var i = 0; i < newRecipes.length; i++) {
-  //     if (newRecipes.id === id) {
-  //       newRecipes = newRecipes.slice(i);
-  //     }
-  //   }
-  //   this.setState({ foundRecipes: newRecipes });
-  // }
 
   closeAddModal() {
     this.setState({
