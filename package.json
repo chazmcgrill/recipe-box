@@ -4,7 +4,8 @@
   "description": "An app for saving and viewing recipes.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --port 8081"
+    "start": "webpack-dev-server",
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
