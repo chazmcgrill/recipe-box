@@ -1,3 +1,4 @@
+import css from '../css/main.sass';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
