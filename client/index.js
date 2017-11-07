@@ -22,6 +22,7 @@ let recipes = [
     toppings: [ 'Dough', 'Cheese', 'Tomato Puree']
   }
 ];
+let counter = recipes.length;
 
 class Recipe extends Component {
   constructor(props) {
@@ -104,14 +105,13 @@ class AddRecipe extends Component {
     this.state = {
       name: "",
       description: "",
-      toppings: "",
-      idCounter: recipes.length
+      toppings: ""
     }
   }
 
-  componentDidMount() {
-    console.log(this.state.idCounter);
-  }
+  // componentDidMount() {
+  //   console.log(recipes);
+  // }
 
   toppingsArray(str) {
     return str.replace(/ /g, '').split(',');
@@ -121,17 +121,15 @@ class AddRecipe extends Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  uniqueId(id) {
-    console.log('id counter state: ' + this.state.idCounter);
-    console.log('id passed: ' + this.state.idCounter);
-    this.setState({ idCounter: id})
-    return id;
+  uniqueId() {
+    counter += 1;
+    return counter;
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     const pizzaObj = {
-      id: this.uniqueId(this.state.idCounter + 1),
+      id: this.uniqueId(),
       name: this.state.name,
       description: this.state.description,
       toppings: this.toppingsArray(this.state.toppings)
