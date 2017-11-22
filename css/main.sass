@@ -3,8 +3,8 @@
 $text: #0f0f0f
 $grey: #ddd
 $white: #fff
-$blue: #2b90d9
-$red: #e85a71
+$accent: #2b90d9
+$danger: #e85a71
 
 html
   font-family: 'Roboto', sans-serif
@@ -21,7 +21,7 @@ h4
 
 button
   font-size: 100%
-  background-color: $blue
+  background-color: $accent
   color: $white
   border-style: none
   border-radius: 2px
@@ -29,7 +29,7 @@ button
   margin: 3px
 
   &:hover
-    background-color: darken($blue,10%)
+    background-color: darken($accent,10%)
 
 .container
   max-width: 250px
@@ -73,7 +73,7 @@ button
   border-radius: 10px
 
 .btn-close
-  background-color: $red
+  background-color: $danger
   padding: 0
   width: 30px
   height: 30px
@@ -89,7 +89,7 @@ input, textarea, label
   padding-left: 5px
 
 .danger
-  background: $red
+  background: $danger
 
   &:hover
-    background-color: darken($red,10%)
+    background-color: darken($danger,10%)
