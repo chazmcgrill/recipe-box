@@ -26,14 +26,21 @@ class App extends Component {
           toppings: [ 'Dough', 'Cheese', 'Tomato Puree']
         }
       ],
-      nextRecipeId: 3
+      nextRecipeId: 3,
+      showNewRecipe: false
     }
 
     this.handleNewRecipe = this.handleNewRecipe.bind(this)
+    this.openRecipeForm = this.openRecipeForm.bind(this)
   }
 
   toppingsArray(str) {
     return str.replace(/ /g, '').split(',');
+  }
+
+  openRecipeForm(e) {
+    e.preventDefault()
+    this.setState({showNewRecipe: true})
   }
 
   handleNewRecipe(recipe) {
@@ -42,12 +49,14 @@ class App extends Component {
       const newRecipe = {...recipe, id: this.state.nextRecipeId};
       return {
         nextRecipeId: prevState.nextRecipeId + 1,
-        recipes: [...this.state.recipes, newRecipe]
+        recipes: [...this.state.recipes, newRecipe],
+        showNewRecipe: false
       }
     })
   }
 
   render() {
+    const {showNewRecipe} = this.state;
     const recipes = this.state.recipes.map((recipe, index) => (
       <Recipe key={recipe.id} recipe={recipe} />
     ));
@@ -56,8 +65,11 @@ class App extends Component {
         <div className="recipe-box">
           {recipes}
         </div>
-        <button>Add Recipe</button>
-        <NewRecipe onSave={this.handleNewRecipe}/>
+        <button onClick={this.openRecipeForm}>Add Recipe</button>
+        {showNewRecipe ? <NewRecipe
+          onSave={this.handleNewRecipe}
+          closeModal={() => this.setState({showNewRecipe: false})}
+        /> : null}
       </div>
     )
   }

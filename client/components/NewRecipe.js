@@ -26,7 +26,7 @@ class AddRecipe extends Component {
     return (
       <div className="modal-bg">
         <div className="modal-box">
-          <button className="btn-close" onClick={this.handleChange}>X</button>
+          <button className="btn-close" onClick={this.props.closeModal}>X</button>
           <form onSubmit={this.handleSubmit}>
             <label>Name</label>
             <input
