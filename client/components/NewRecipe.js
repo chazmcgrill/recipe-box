@@ -4,32 +4,34 @@ class AddRecipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
+      name: '',
       description: '',
       toppings: ''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value});
   }
 
-  toppingsArray(str) {
-    return str.replace(/ /g, '').split(',');
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.onSave({...this.state});
   }
 
   render() {
-    const {title, description, toppings} = this.state;
+    const {name, description, toppings} = this.state;
     return (
       <div className="modal-bg">
         <div className="modal-box">
           <button className="btn-close" onClick={this.handleChange}>X</button>
-          <form onSubmit={() => {}}>
+          <form onSubmit={this.handleSubmit}>
             <label>Name</label>
             <input
-              name="title"
-              key="title"
+              name="name"
+              key="name"
               type="text"
               placeholder="pizza name"
               value={this.state.title}
@@ -52,9 +54,7 @@ class AddRecipe extends Component {
               value={toppings}
               onChange={this.handleChange}
             />
-            <button
-              type="submit"
-              value="Add Recipe"></button>
+            <button type="submit">Add Recipe</button>
           </form>
         </div>
       </div>
