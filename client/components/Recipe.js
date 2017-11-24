@@ -16,10 +16,10 @@ class Recipe extends Component {
             {toppings}
           </ul>
           <button className="danger" onClick={() => this.props.onDelete(id)}>Delete</button>
-          <button>Edit</button>
+          <button onClick={() => this.props.onEdit(id)}>Edit</button>
         </div>
       </div>
-      
+
     )
   }
 }
