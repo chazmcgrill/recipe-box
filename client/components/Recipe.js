@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 
 class Recipe extends Component {
   render() {
+    const {name, description, id} = this.props.recipe;
+    const toppings = this.props.recipe.toppings.map((item, i) => (
+      <li key={i}>{item}</li>
+    ))
     return (
       <div className="list-item" >
-        <h4>{this.props.recipe.name}</h4>
+        <h4>{name}</h4>
         <div>
-          <p>{this.props.recipe.description}</p>
+          <p>{description}</p>
           <strong>Toppings</strong>
           <ul>
-            {this.props.recipe.toppings.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
+            {toppings}
           </ul>
-          <button className="danger">Delete</button>
+          <button className="danger" onClick={() => this.props.onDelete(id)}>Delete</button>
           <button>Edit</button>
         </div>
       </div>
+      
     )
   }
 }
