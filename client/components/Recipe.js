@@ -23,10 +23,10 @@ class Recipe extends Component {
 
     return (
       <div className="list-item" >
-        <h4 onClick={this.handleTitleClick}>{name}</h4>
+        <h3 className="button" onClick={this.handleTitleClick}>{name}</h3>
         {showInfo ? <div>
-          <p>{description}</p>
-          <strong>Toppings</strong>
+          <p><em>{description}</em></p>
+          <p><strong>Toppings</strong></p>
           <ul>
             {toppings}
           </ul>

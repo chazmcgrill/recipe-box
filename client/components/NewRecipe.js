@@ -26,7 +26,7 @@ class AddRecipe extends Component {
     return (
       <div className="modal-bg">
         <div className="modal-box">
-          <button className="btn-close" onClick={this.props.closeModal}>X</button>
+          <button className="btn-close danger" onClick={this.props.closeModal}>X</button>
           <form onSubmit={this.handleSubmit}>
             <label>Name</label>
             <input
@@ -36,6 +36,7 @@ class AddRecipe extends Component {
               placeholder="pizza name"
               value={this.state.title}
               onChange={this.handleChange}
+              required
             />
             <label>Description</label>
             <input
@@ -45,6 +46,7 @@ class AddRecipe extends Component {
               placeholder="description"
               value={description}
               onChange={this.handleChange}
+              required
             />
             <label>Toppings</label>
             <textarea
@@ -53,6 +55,7 @@ class AddRecipe extends Component {
               placeholder="separate by commas"
               value={toppings}
               onChange={this.handleChange}
+              required
             />
             <button type="submit">Add Recipe</button>
           </form>

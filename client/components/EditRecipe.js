@@ -28,7 +28,7 @@ class EditRecipe extends Component {
     return (
       <div className="modal-bg">
         <div className="modal-box">
-          <button className="btn-close" onClick={this.props.closeModal}>X</button>
+          <button className="btn-close danger" onClick={this.props.closeModal}>X</button>
           <form onSubmit={this.handleSubmit}>
             <label>Name</label>
             <input
@@ -38,6 +38,7 @@ class EditRecipe extends Component {
               placeholder="pizza name"
               value={this.state.name}
               onChange={this.handleChange}
+              required
             />
             <label>Description</label>
             <input
@@ -47,6 +48,7 @@ class EditRecipe extends Component {
               placeholder="description"
               value={description}
               onChange={this.handleChange}
+              required
             />
             <label>Toppings</label>
             <textarea
@@ -55,6 +57,7 @@ class EditRecipe extends Component {
               placeholder="separate by commas"
               value={toppings}
               onChange={this.handleChange}
+              required
             />
             <button type="submit">Edit Recipe</button>
           </form>
