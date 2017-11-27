@@ -7,37 +7,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: [
-        {
-          id: 0,
-          name: 'Margherita',
-          description: 'The classic neapolitan pizza',
-          toppings: [ 'Mozzarella', 'Tomatoes', 'Basil']
-        },
-        {
-          id: 1,
-          name: 'Bolognese',
-          description: 'Lorem ipsum dolor sit amet.',
-          toppings: [ 'Onion', 'Minced Beef', 'Chopped Tomatoes']
-        },
-        {
-          id: 2,
-          name: 'Tuscan',
-          description: 'Ut enim ad minim veniam.',
-          toppings: [ 'Dough', 'Cheese', 'Tomato Puree']
-        }
-      ],
+      recipes: [],
       nextRecipeId: 3,
       showNewRecipe: false,
       showEditRecipe: false,
       editId: ''
     }
 
-    this.handleNewRecipe = this.handleNewRecipe.bind(this)
-    this.openRecipeForm = this.openRecipeForm.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleEdit = this.handleEdit.bind(this)
-    this.handleEditRecipe = this.handleEditRecipe.bind(this)
+    this.handleNewRecipe = this.handleNewRecipe.bind(this);
+    this.openRecipeForm = this.openRecipeForm.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleEditRecipe = this.handleEditRecipe.bind(this);
+  }
+
+  componentDidMount() {
+    const cacheData = localStorage.getItem('recipes');
+    let recipes = cacheData ? JSON.parse(localStorage.getItem('recipes')) : this.props.recipes;
+    let nextRecipeId = cacheData ? localStorage.getItem('nextRecipeId') : this.state.nextRecipeId;
+    this.setState({recipes, nextRecipeId})
   }
 
   toppingsArray(str) {
@@ -62,23 +50,27 @@ class App extends Component {
     recipe.toppings = this.toppingsArray(recipe.toppings);
     this.setState((prevState, props) => {
       const newRecipe = {...recipe, id: this.state.nextRecipeId};
-
       return {
         nextRecipeId: prevState.nextRecipeId + 1,
         recipes: [...this.state.recipes, newRecipe],
         showNewRecipe: false
       }
-    })
+    });
   }
 
   handleDelete(id) {
     const recipes = this.state.recipes.filter(recipe => recipe.id !== id);
-    
     this.setState({recipes});
   }
 
   handleEdit(editId) {
     this.setState({editId, showEditRecipe: true})
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('recipes', JSON.stringify(nextState.recipes));
+    localStorage.setItem('nextRecipeId', nextState.nextRecipeId);
+    localStorage.setItem('recipesDate', Date.now());
   }
 
   render() {
