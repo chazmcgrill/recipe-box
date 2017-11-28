@@ -11,7 +11,7 @@ class App extends Component {
       nextRecipeId: 3,
       showNewRecipe: false,
       showEditRecipe: false,
-      editId: ''
+      editIndex: ''
     }
 
     this.handleNewRecipe = this.handleNewRecipe.bind(this);
@@ -22,9 +22,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const cacheData = localStorage.getItem('recipes');
-    let recipes = cacheData ? JSON.parse(localStorage.getItem('recipes')) : this.props.recipes;
-    let nextRecipeId = cacheData ? localStorage.getItem('nextRecipeId') : this.state.nextRecipeId;
+    const cacheData = localStorage.getItem('ct-recipes');
+    let recipes = cacheData ? JSON.parse(localStorage.getItem('ct-recipes')) : this.props.recipes;
+    let nextRecipeId = cacheData ? localStorage.getItem('ct-nextRecipeId') : this.state.nextRecipeId;
     this.setState({recipes, nextRecipeId})
   }
 
@@ -63,19 +63,19 @@ class App extends Component {
     this.setState({recipes});
   }
 
-  handleEdit(editId) {
-    this.setState({editId, showEditRecipe: true})
+  handleEdit(id) {
+    const editIndex = this.state.recipes.findIndex(item => item.id === id)
+    this.setState({editIndex, showEditRecipe: true})
   }
 
   componentWillUpdate(nextProps, nextState) {
-    localStorage.setItem('recipes', JSON.stringify(nextState.recipes));
-    localStorage.setItem('nextRecipeId', nextState.nextRecipeId);
-    localStorage.setItem('recipesDate', Date.now());
+    localStorage.setItem('ct-recipes', JSON.stringify(nextState.recipes));
+    localStorage.setItem('ct-nextRecipeId', nextState.nextRecipeId);
   }
 
   render() {
-    const {showNewRecipe, showEditRecipe, editId} = this.state;
-    const recipeEdit = this.state.recipes[editId];
+    const {showNewRecipe, showEditRecipe, editIndex} = this.state;
+    const recipeEdit = this.state.recipes[editIndex];
     const recipes = this.state.recipes.map((recipe, index) => (
       <Recipe
         key={recipe.id}
